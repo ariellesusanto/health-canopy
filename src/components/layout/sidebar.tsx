@@ -22,7 +22,6 @@ import {
   Thermometer,
   Sparkles,
 } from "lucide-react";
-import { useClerk } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { overallReadinessScore } from "@/lib/mock-data";
 import { useSimulation } from "@/lib/simulation";
@@ -129,7 +128,6 @@ export function Sidebar() {
 
 function UserSlot() {
   const { role, logout } = useRole();
-  const { signOut } = useClerk();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -143,18 +141,18 @@ function UserSlot() {
     return () => window.removeEventListener("mousedown", onClick);
   }, [open]);
 
-  // Switch role: keep the Clerk session, drop the role -> role chooser.
+  // Switch role: drop the role -> role chooser.
   function switchRole() {
     logout();
     setOpen(false);
     router.replace("/login");
   }
 
-  // Log out: end the Clerk session and drop the role.
+  // Log out: drop the role and return to the chooser.
   function logOut() {
     logout();
     setOpen(false);
-    signOut({ redirectUrl: "/sign-in" });
+    router.replace("/login");
   }
 
   const persona = role?.persona ?? { name: "Demo User", title: "Contra Costa Health", initials: "CC" };

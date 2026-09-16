@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Outfit, Fraunces, Geist_Mono } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { AppShell } from "@/components/layout/app-shell";
 import { ToastProvider } from "@/components/ui/toast";
@@ -36,12 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-      appearance={{ variables: { colorPrimary: "#b5654a" } }}
-      signInUrl="/sign-in"
-      signUpUrl="/sign-up"
-    >
-      <html lang="en">
+    <html lang="en">
         <body
           className={`${outfit.variable} ${fraunces.variable} ${geistMono.variable} antialiased`}
         >
@@ -56,6 +50,5 @@ export default function RootLayout({
           </RoleProvider>
         </body>
       </html>
-    </ClerkProvider>
   );
 }

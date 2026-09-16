@@ -2,22 +2,18 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser, useClerk } from "@clerk/nextjs";
-import { Leaf, ChevronDown, ArrowRight, LogOut } from "lucide-react";
+import { Leaf, ChevronDown, ArrowRight } from "lucide-react";
 import { useRole } from "@/lib/role-context";
 import { ROLE_LIST, type RoleId } from "@/lib/roles";
 
-// Step 2 of auth: Clerk has established identity; here the user picks
-// which role/persona to enter the demo as.
+// The only gate in this demo: pick which role to enter as.
 export default function RoleChooserPage() {
   const router = useRouter();
   const { setRole } = useRole();
-  const { user } = useUser();
-  const { signOut } = useClerk();
   const [roleId, setRoleId] = useState<RoleId>(ROLE_LIST[0].id);
 
   const selected = ROLE_LIST.find((r) => r.id === roleId)!;
-  const greetingName = user?.firstName || user?.primaryEmailAddress?.emailAddress || "there";
+  const greetingName = "there";
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -71,16 +67,8 @@ export default function RoleChooserPage() {
             </button>
           </form>
 
-          <div className="mt-6 flex items-center justify-between">
+          <div className="mt-6">
             <p className="text-[11px] text-muted">Contra Costa Health · demo · synthetic data</p>
-            <button
-              type="button"
-              onClick={() => signOut({ redirectUrl: "/sign-in" })}
-              className="flex items-center gap-1 text-[11px] text-muted hover:text-foreground transition-colors"
-            >
-              <LogOut className="w-3 h-3" />
-              Sign out
-            </button>
           </div>
         </div>
       </div>
