@@ -14,6 +14,7 @@ import {
   Leaf,
   Syringe,
   ClipboardList,
+  ClipboardPlus,
   Gauge,
   ChevronsUpDown,
   Repeat,
@@ -29,12 +30,14 @@ import { startGuidedTour } from "@/components/demo/guided-tour";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useTenant } from "@/lib/tenant-context";
 import { useRole } from "@/lib/role-context";
+import { useSupplyRequests } from "@/lib/supply-requests-context";
 import { NAV_SECTIONS, type NavSectionId } from "@/lib/roles";
 
 const SECTION_ICONS: Record<NavSectionId, typeof Package> = {
   dashboard: LayoutDashboard,
   "unit-overview": ClipboardList,
   "executive-overview": Gauge,
+  requests: ClipboardPlus,
   inventory: Package,
   "vaccine-management": Syringe,
   "cold-chain": Thermometer,
@@ -49,6 +52,7 @@ export function Sidebar() {
   const pathname = usePathname();
   const { role } = useRole();
   const { coldChainAlertCount, excursionActive } = useSimulation();
+  const { openCount: openRequestCount } = useSupplyRequests();
 
   const sections = role ? role.navSections : [];
 
@@ -93,6 +97,11 @@ export function Sidebar() {
               {item.label}
               {item.id === "ai-insights" && (
                 <span className="ml-auto w-2 h-2 rounded-full bg-accent-light pulse-dot" />
+              )}
+              {item.id === "requests" && openRequestCount > 0 && (
+                <span className="ml-auto text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-primary/25 text-primary-light">
+                  {openRequestCount}
+                </span>
               )}
               {item.id === "cold-chain" && coldChainAlertCount > 0 && (
                 <span

@@ -24,6 +24,7 @@ export type NavSectionId =
   | "dashboard"
   | "unit-overview"
   | "executive-overview"
+  | "requests"
   | "inventory"
   | "vaccine-management"
   | "cold-chain"
@@ -48,6 +49,7 @@ export const NAV_SECTIONS: Record<NavSectionId, NavSection> = {
   dashboard: { id: "dashboard", label: "Dashboard", href: "/" },
   "unit-overview": { id: "unit-overview", label: "My Unit", href: "/unit" },
   "executive-overview": { id: "executive-overview", label: "Executive Overview", href: "/executive" },
+  requests: { id: "requests", label: "Requests", href: "/requests" },
   inventory: { id: "inventory", label: "Inventory", href: "/inventory" },
   "vaccine-management": { id: "vaccine-management", label: "Vaccine Mgmt", href: "/vaccine-management" },
   "cold-chain": { id: "cold-chain", label: "Cold Chain", href: "/cold-chain" },
@@ -88,6 +90,7 @@ export const ROLES: Record<RoleId, RoleConfig> = {
     navSections: [
       "dashboard",
       "inventory",
+      "requests",
       "vaccine-management",
       "cold-chain",
       "ai-insights",
@@ -108,7 +111,7 @@ export const ROLES: Record<RoleId, RoleConfig> = {
     shortLabel: "Unit Coordinator",
     description: "Point-of-use view for a single unit — stock, alerts, deliveries.",
     landingRoute: "/unit",
-    navSections: ["unit-overview", "inventory", "vaccine-management", "cold-chain"],
+    navSections: ["unit-overview", "requests", "inventory", "vaccine-management", "cold-chain"],
     dataScope: "unit",
     defaultUnit: "Med/Surg",
     readOnly: false,
@@ -122,7 +125,7 @@ export const ROLES: Record<RoleId, RoleConfig> = {
     shortLabel: "Executive",
     description: "Read-only, cross-site state of the system for leadership — overview + financials.",
     landingRoute: "/executive",
-    navSections: ["executive-overview", "financials"],
+    navSections: ["executive-overview", "requests", "financials"],
     dataScope: "system",
     readOnly: true,
     persona: { name: "Dr. Lena Ortiz", title: "Chief Nursing Information Officer", initials: "LO" },
